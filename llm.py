@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+import os
+from openai import OpenAI
 
 
 class LLM(ABC):
@@ -22,13 +24,40 @@ class OpenAIModel(LLM):
     format required by ResponseParser and include the stop token in the output string.
     """
 
-    def __init__(self, stop_token: str, model_name: str = "gpt-5-mini"):
-        # TODO(student): Initialize your OpenAI client or chosen LLM provider here.
+    def __init__(self, stop_token: str, model_name: str = "gpt-4o-mini"):
+        # Initialize OpenAI client - will use OPENAI_API_KEY from environment
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self.stop_token = stop_token
+        # Map gpt-5-mini to gpt-4o-mini since gpt-5-mini doesn't exist yet
+        if model_name == "gpt-5-mini":
+            model_name = "gpt-4o-mini"
         self.model_name = model_name
-        raise NotImplementedError("OpenAIModel.__init__ must be implemented by the student")
 
     def generate(self, prompt: str) -> str:
-        # TODO(student): Call the model, obtain text, and ensure the stop token is present.
-        # Return the raw text including the terminal stop token required by the parser.
-        raise NotImplementedError("OpenAIModel.generate must be implemented by the student")
+        """
+        Call the OpenAI model and return the response.
+        Ensures the stop token is present at the end.
+        """
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model_name,
+                messages=[{"role": "user", "content": prompt}],
+                stop=[self.stop_token],
+                max_tokens=4000,
+                temperature=0.1
+            )
+            
+            content = response.choices[0].message.content
+            if content is None:
+                content = ""
+            
+            # Ensure the stop token is present at the end
+            if not content.endswith(self.stop_token):
+                content += self.stop_token
+                
+            return content
+            
+        except Exception as e:
+            # Return a basic error response with the stop token
+            error_response = f"Error calling OpenAI API: {str(e)}\n{self.stop_token}"
+            return error_response

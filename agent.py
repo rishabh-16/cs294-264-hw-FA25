@@ -12,6 +12,7 @@ clear specifications and TODOs.
 """
 
 from typing import List, Callable, Dict, Any
+import time
 
 from response_parser import ResponseParser
 from llm import LLM, OpenAIModel
@@ -32,7 +33,8 @@ class ReactAgent:
         self.llm = llm
 
         # Message tree storage
-        self.id_to_message: List[Dict[str, Any]] = []
+        self.id_to_message: Dict[int, Dict[str, Any]] = {}
+        self.next_id: int = 0
         self.root_message_id: int = -1
         self.current_message_id: int = -1
 
@@ -56,20 +58,64 @@ class ReactAgent:
         The message must include fields: role, content, timestamp, unique_id, parent, children.
         Maintain a pointer to the current node and the root node.
         """
-        # TODO(student): Implement message tree creation and linking.
-        raise NotImplementedError("add_message must be implemented by the student")
+        message_id = self.next_id
+        self.next_id += 1
+        
+        # Create the message
+        message = {
+            "role": role,
+            "content": content,
+            "timestamp": int(time.time()),
+            "unique_id": message_id,
+            "parent": self.current_message_id if self.current_message_id != -1 else None,
+            "children": []
+        }
+        
+        # Add to storage
+        self.id_to_message[message_id] = message
+        
+        # Link to parent if exists
+        if self.current_message_id != -1:
+            parent_message = self.id_to_message[self.current_message_id]
+            parent_message["children"].append(message_id)
+        
+        # Update pointers
+        if self.root_message_id == -1:
+            self.root_message_id = message_id
+            
+        self.current_message_id = message_id
+        
+        return message_id
 
     def set_message_content(self, message_id: int, content: str) -> None:
         """Update message content by id."""
-        # TODO(student): Implement message content update.
-        raise NotImplementedError("set_message_content must be implemented by the student")
+        if message_id not in self.id_to_message:
+            raise ValueError(f"Message ID {message_id} not found")
+        self.id_to_message[message_id]["content"] = content
 
     def get_context(self) -> str:
         """
         Build the full LLM context by walking from the root to the current message.
         """
-        # TODO(student): Implement context construction.
-        raise NotImplementedError("get_context must be implemented by the student")
+        # Build path from root to current
+        path = []
+        current_id = self.current_message_id
+        
+        # Walk backwards to root
+        while current_id is not None:
+            path.append(current_id)
+            message = self.id_to_message[current_id]
+            current_id = message["parent"]
+        
+        # Reverse to get root-to-current path
+        path.reverse()
+        
+        # Build context string
+        context_parts = []
+        for message_id in path:
+            context_parts.append(self.message_id_to_context(message_id))
+        
+        return "\n".join(context_parts)
 
     # -------------------- REQUIRED TOOLS --------------------
     def add_functions(self, tools: List[Callable]):
@@ -80,8 +126,11 @@ class ReactAgent:
         - The signature of each tool
         - The docstring of each tool
         """
-        # TODO(student): Register tools and construct tool descriptions for the system prompt.
-        raise NotImplementedError("add_functions must be implemented by the student")
+        for tool in tools:
+            self.function_map[tool.__name__] = tool
+        
+        # Update system prompt to include tool descriptions
+        # The system prompt construction happens in message_id_to_context method
     
     def finish(self, result: str):
         """The agent must call this function with the final result when it has solved the given task. The function calls "git add -A and git diff --cached" to generate a patch and returns the patch as submission.
@@ -104,8 +153,16 @@ class ReactAgent:
 
         Returns a short success string.
         """
-        # TODO(student): Implement instruction update and backtracking logic.
-        raise NotImplementedError("add_instructions_and_backtrack must be implemented by the student")
+        # Update the instruction node content
+        self.set_message_content(self.instructions_message_id, instructions)
+        
+        # Backtrack to the specified message
+        if at_message_id not in self.id_to_message:
+            raise ValueError(f"Message ID {at_message_id} not found")
+        
+        self.current_message_id = at_message_id
+        
+        return f"Successfully updated instructions and backtracked to message {at_message_id}"
 
     # -------------------- MAIN LOOP --------------------
     def run(self, task: str, max_steps: int) -> str:
@@ -120,8 +177,67 @@ class ReactAgent:
             - Append tool result to the tree
             - If `finish` is called, return the final result
         """
-        # TODO(student): Implement the Reason-Act loop per the assignment, including error handling.
-        raise NotImplementedError("run must be implemented by the student")
+        # Set the user task content
+        self.set_message_content(self.user_message_id, task)
+        
+        # Ensure we don't exceed max steps
+        max_steps = min(max_steps, 100)
+        
+        for step in range(max_steps):
+            try:
+                # Build context from message tree
+                context = self.get_context()
+                
+                # Query the LLM
+                response = self.llm.generate(context)
+                
+                # Add assistant response to tree
+                self.add_message("assistant", response)
+                
+                # Parse the function call
+                try:
+                    parsed = self.parser.parse(response)
+                    function_name = parsed["name"]
+                    arguments = parsed["arguments"]
+                    
+                    # Check if function exists
+                    if function_name not in self.function_map:
+                        error_msg = f"Unknown function: {function_name}"
+                        self.add_message("tool", error_msg)
+                        continue
+                    
+                    # Execute the function
+                    func = self.function_map[function_name]
+                    try:
+                        # Call function with arguments
+                        if arguments:
+                            result = func(**arguments)
+                        else:
+                            result = func()
+                        
+                        # Handle finish function specially
+                        if function_name == "finish":
+                            return str(result)
+                        
+                        # Add tool result to tree
+                        self.add_message("tool", str(result))
+                        
+                    except Exception as e:
+                        error_msg = f"Error executing {function_name}: {str(e)}"
+                        self.add_message("tool", error_msg)
+                        
+                except ValueError as e:
+                    # Parser error
+                    error_msg = f"Failed to parse function call: {str(e)}"
+                    self.add_message("tool", error_msg)
+                    
+            except Exception as e:
+                # LLM error or other unexpected error
+                error_msg = f"Unexpected error in step {step}: {str(e)}"
+                self.add_message("tool", error_msg)
+        
+        # Max steps reached without calling finish
+        return f"Agent reached maximum steps ({max_steps}) without calling finish"
 
     def message_id_to_context(self, message_id: int) -> str:
         """

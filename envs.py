@@ -54,14 +54,59 @@ class SWEEnvironment:
     def replace_in_file(self, file_path: str, from_line: int, to_line: int, content: str) -> str:
         """
         [Optional] Replace the content of the file from the given line to the given line with the given content
+        
+        Args:
+            file_path (str): Path to the file to modify
+            from_line (int): Starting line number (1-based)
+            to_line (int): Ending line number (1-based, inclusive)
+            content (str): New content to replace the lines with
+            
+        Returns:
+            Success message or error description
         """
-        raise NotImplementedError("replace_in_file must be implemented by the student")
+        try:
+            # Read the current file content
+            current_content = self.env.execute(f"cat '{file_path}'")
+            lines = current_content.split('\n')
+            
+            # Convert to 0-based indexing and validate
+            from_idx = from_line - 1
+            to_idx = to_line - 1
+            
+            if from_idx < 0 or to_idx >= len(lines) or from_idx > to_idx:
+                return f"Error: Invalid line range {from_line}-{to_line} for file with {len(lines)} lines"
+            
+            # Replace the specified lines
+            new_lines = lines[:from_idx] + [content] + lines[to_idx + 1:]
+            new_content = '\n'.join(new_lines)
+            
+            # Write the new content to a temporary file and then move it
+            temp_file = f"/tmp/temp_edit_{file_path.replace('/', '_')}"
+            write_cmd = f"cat > '{temp_file}' << 'EOF'\n{new_content}\nEOF"
+            self.env.execute(write_cmd)
+            
+            # Move temp file to target
+            self.env.execute(f"mv '{temp_file}' '{file_path}'")
+            
+            return f"Successfully replaced lines {from_line}-{to_line} in {file_path}"
+            
+        except Exception as e:
+            return f"Error replacing content in {file_path}: {str(e)}"
     
     def show_file(self, file_path: str) -> str:
         """
-        [Optional]Show the content of the file
+        [Optional] Show the content of the file
+        
+        Args:
+            file_path (str): Path to the file to display
+            
+        Returns:
+            File content or error message
         """
-        raise NotImplementedError("show_file must be implemented by the student")
+        try:
+            return self.env.execute(f"cat '{file_path}'")
+        except Exception as e:
+            return f"Error reading file {file_path}: {str(e)}"
 
 class DumbEnvironment:
     """

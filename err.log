@@ -1,0 +1,105 @@
+👋 This is mini-swe-agent version 1.13.3.
+Loading global config from '/home/rishabhtiwari/.config/mini-swe-agent/.env'
+Results will be saved to results
+Loading dataset lynnliu030/swebench-eval-subset, split test...
+Running on 20 instances...
+Processing instance django__django-10973
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-d5d69d61 -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.django_1776_django-10973:latest sleep 2h                                                                                                    
+Error processing instance django__django-10973: Command '['docker', 'run', '-d', '--name', 'minisweagent-d5d69d61', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.django_1776_django-10973:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Saved trajectory to 'results/django__django-10973/django__django-10973.traj.json'
+Completed instance django__django-10973, result: 
+Processing instance django__django-13810
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-c75ea304 -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.django_1776_django-13810:latest sleep 2h                                                                                                    
+Processing instance astropy__astropy-7166
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-f36d2989 -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.astropy_1776_astropy-7166:latest sleep 2h                                                                                                   
+Processing instance django__django-11179
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-ae6bdfad -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.django_1776_django-11179:latest sleep 2h                                                                                                    
+Error processing instance django__django-13810: Command '['docker', 'run', '-d', '--name', 'minisweagent-c75ea304', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.django_1776_django-13810:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Processing instance django__django-13297
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-dccdaac5 -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.django_1776_django-13297:latest sleep 2h                                                                                                    
+Saved trajectory to 'results/django__django-13810/django__django-13810.traj.json'
+Processing instance django__django-14053
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-5d7c4ec0 -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.django_1776_django-14053:latest sleep 2h                                                                                                    
+Completed instance django__django-13810, result: 
+Processing instance django__django-12406
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-2f91818c -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.django_1776_django-12406:latest sleep 2h                                                                                                    
+Processing instance django__django-16631
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-85e0f532 -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.django_1776_django-16631:latest sleep 2h                                                                                                    
+Processing instance django__django-16662
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-d879cfda -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.django_1776_django-16662:latest sleep 2h                                                                                                    
+Processing instance django__django-14011
+Error processing instance astropy__astropy-7166: Command '['docker', 'run', '-d', '--name', 'minisweagent-f36d2989', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.astropy_1776_astropy-7166:latest', 'sleep', '2h']' returned non-zero exit status 125.
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-aa3f102e -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.django_1776_django-14011:latest sleep 2h                                                                                                    
+Saved trajectory to 'results/astropy__astropy-7166/astropy__astropy-7166.traj.json'
+Completed instance astropy__astropy-7166, result: 
+Error processing instance django__django-11179: Command '['docker', 'run', '-d', '--name', 'minisweagent-ae6bdfad', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.django_1776_django-11179:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Saved trajectory to 'results/django__django-11179/django__django-11179.traj.json'
+Completed instance django__django-11179, result: 
+Error processing instance django__django-13297: Command '['docker', 'run', '-d', '--name', 'minisweagent-dccdaac5', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.django_1776_django-13297:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Saved trajectory to 'results/django__django-13297/django__django-13297.traj.json'
+Completed instance django__django-13297, result: 
+Error processing instance django__django-16631: Command '['docker', 'run', '-d', '--name', 'minisweagent-85e0f532', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.django_1776_django-16631:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Processing instance django__django-7530
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-ebf39897 -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.django_1776_django-7530:latest sleep 2h                                                                                                     
+Error processing instance django__django-14053: Command '['docker', 'run', '-d', '--name', 'minisweagent-5d7c4ec0', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.django_1776_django-14053:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Saved trajectory to 'results/django__django-16631/django__django-16631.traj.json'
+Saved trajectory to 'results/django__django-14053/django__django-14053.traj.json'
+Completed instance django__django-16631, result: 
+Error processing instance django__django-12406: Command '['docker', 'run', '-d', '--name', 'minisweagent-2f91818c', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.django_1776_django-12406:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Saved trajectory to 'results/django__django-12406/django__django-12406.traj.json'
+Completed instance django__django-14053, result: 
+Error processing instance django__django-14011: Command '['docker', 'run', '-d', '--name', 'minisweagent-aa3f102e', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.django_1776_django-14011:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Error processing instance django__django-16662: Command '['docker', 'run', '-d', '--name', 'minisweagent-d879cfda', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.django_1776_django-16662:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Completed instance django__django-12406, result: 
+Saved trajectory to 'results/django__django-14011/django__django-14011.traj.json'
+Saved trajectory to 'results/django__django-16662/django__django-16662.traj.json'
+Completed instance django__django-14011, result: 
+Completed instance django__django-16662, result: 
+Error processing instance django__django-7530: Command '['docker', 'run', '-d', '--name', 'minisweagent-ebf39897', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.django_1776_django-7530:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Saved trajectory to 'results/django__django-7530/django__django-7530.traj.json'
+Completed instance django__django-7530, result: 
+Processing instance psf__requests-1921
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-13d54c3f -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.psf_1776_requests-1921:latest sleep 2h                                                                                                      
+Error processing instance psf__requests-1921: Command '['docker', 'run', '-d', '--name', 'minisweagent-13d54c3f', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.psf_1776_requests-1921:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Saved trajectory to 'results/psf__requests-1921/psf__requests-1921.traj.json'
+Completed instance psf__requests-1921, result: 
+Processing instance sphinx-doc__sphinx-7590
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-ee115455 -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-7590:latest sleep 2h                                                                                                 
+Processing instance sphinx-doc__sphinx-9230
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-aaaef954 -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230:latest sleep 2h                                                                                                 
+Error processing instance sphinx-doc__sphinx-7590: Command '['docker', 'run', '-d', '--name', 'minisweagent-ee115455', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-7590:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Saved trajectory to 'results/sphinx-doc__sphinx-7590/sphinx-doc__sphinx-7590.traj.json'
+Completed instance sphinx-doc__sphinx-7590, result: 
+Processing instance psf__requests-2931
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-bc6e6fa1 -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.psf_1776_requests-2931:latest sleep 2h                                                                                                      
+Processing instance pytest-dev__pytest-7490
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-8ed72290 -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-7490:latest sleep 2h                                                                                                 
+Processing instance scikit-learn__scikit-learn-26323
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-6c036d76 -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-26323:latest sleep 2h                                                                                        
+Processing instance sympy__sympy-24213
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-c8660e33 -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.sympy_1776_sympy-24213:latest sleep 2h                                                                                                      
+Processing instance sympy__sympy-17655
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-650d29a6 -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.sympy_1776_sympy-17655:latest sleep 2h                                                                                                      
+Processing instance sphinx-doc__sphinx-9658
+minisweagent.environment: DEBUG: Starting container with command: docker run -d --name minisweagent-2f0bd3c7 -w /testbed --rm docker.io/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9658:latest sleep 2h                                                                                                 
+Error processing instance sphinx-doc__sphinx-9230: Command '['docker', 'run', '-d', '--name', 'minisweagent-aaaef954', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Saved trajectory to 'results/sphinx-doc__sphinx-9230/sphinx-doc__sphinx-9230.traj.json'
+Completed instance sphinx-doc__sphinx-9230, result: 
+Error processing instance psf__requests-2931: Command '['docker', 'run', '-d', '--name', 'minisweagent-bc6e6fa1', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.psf_1776_requests-2931:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Saved trajectory to 'results/psf__requests-2931/psf__requests-2931.traj.json'
+Completed instance psf__requests-2931, result: 
+Error processing instance pytest-dev__pytest-7490: Command '['docker', 'run', '-d', '--name', 'minisweagent-8ed72290', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-7490:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Saved trajectory to 'results/pytest-dev__pytest-7490/pytest-dev__pytest-7490.traj.json'
+Completed instance pytest-dev__pytest-7490, result: 
+Error processing instance sympy__sympy-24213: Command '['docker', 'run', '-d', '--name', 'minisweagent-c8660e33', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.sympy_1776_sympy-24213:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Saved trajectory to 'results/sympy__sympy-24213/sympy__sympy-24213.traj.json'
+Error processing instance scikit-learn__scikit-learn-26323: Command '['docker', 'run', '-d', '--name', 'minisweagent-6c036d76', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-26323:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Completed instance sympy__sympy-24213, result: 
+Saved trajectory to 'results/scikit-learn__scikit-learn-26323/scikit-learn__scikit-learn-26323.traj.json'
+Error processing instance sphinx-doc__sphinx-9658: Command '['docker', 'run', '-d', '--name', 'minisweagent-2f0bd3c7', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9658:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Error processing instance sympy__sympy-17655: Command '['docker', 'run', '-d', '--name', 'minisweagent-650d29a6', '-w', '/testbed', '--rm', 'docker.io/swebench/sweb.eval.x86_64.sympy_1776_sympy-17655:latest', 'sleep', '2h']' returned non-zero exit status 125.
+Completed instance scikit-learn__scikit-learn-26323, result: 
+Saved trajectory to 'results/sphinx-doc__sphinx-9658/sphinx-doc__sphinx-9658.traj.json'
+Saved trajectory to 'results/sympy__sympy-17655/sympy__sympy-17655.traj.json'
+Completed instance sphinx-doc__sphinx-9658, result: 
+Completed instance sympy__sympy-17655, result: 
