@@ -54,14 +54,61 @@ class SWEEnvironment:
     def replace_in_file(self, file_path: str, from_line: int, to_line: int, content: str) -> str:
         """
         [Optional] Replace the content of the file from the given line to the given line with the given content
+        
+        Args:
+            file_path (str): Path to the file to modify
+            from_line (int): Starting line number (1-indexed)
+            to_line (int): Ending line number (1-indexed, inclusive)
+            content (str): New content to replace the specified lines
+            
+        Returns:
+            str: Success message
         """
-        raise NotImplementedError("replace_in_file must be implemented by the student")
+        try:
+            # Read the current file content
+            file_content = self.env.execute(f"cat '{file_path}'")
+            lines = file_content.split('\n')
+            
+            # Validate line numbers
+            if from_line < 1 or to_line < 1:
+                raise ValueError("Line numbers must be 1-indexed (start from 1)")
+            if from_line > to_line:
+                raise ValueError("from_line must be <= to_line")
+            if from_line > len(lines):
+                raise ValueError(f"from_line {from_line} exceeds file length {len(lines)}")
+            
+            # Convert to 0-indexed for list operations
+            from_idx = from_line - 1
+            to_idx = min(to_line - 1, len(lines) - 1)
+            
+            # Replace the specified lines
+            new_lines = lines[:from_idx] + [content] + lines[to_idx + 1:]
+            new_content = '\n'.join(new_lines)
+            
+            # Write the modified content back to the file
+            # Escape single quotes in content for shell safety
+            escaped_content = new_content.replace("'", "'\"'\"'")
+            self.env.execute(f"echo '{escaped_content}' > '{file_path}'")
+            
+            return f"Successfully replaced lines {from_line}-{to_line} in {file_path}"
+            
+        except Exception as e:
+            raise ValueError(f"Error replacing content in {file_path}: {str(e)}")
     
     def show_file(self, file_path: str) -> str:
         """
-        [Optional]Show the content of the file
+        [Optional] Show the content of the file
+        
+        Args:
+            file_path (str): Path to the file to display
+            
+        Returns:
+            str: The content of the file
         """
-        raise NotImplementedError("show_file must be implemented by the student")
+        try:
+            return self.env.execute(f"cat '{file_path}'")
+        except Exception as e:
+            raise ValueError(f"Error reading file {file_path}: {str(e)}")
 
 class DumbEnvironment:
     """
@@ -83,3 +130,16 @@ class DumbEnvironment:
         if result.returncode:
             raise ValueError(output)
         return output
+
+    def run_bash_cmd(self, command: str) -> str:
+        """
+        Run the command in a bash shell and return the output or throw a ValueError
+        if the process returns non-zero exit code.
+
+        Args;
+            command (str): the shell command to run
+
+        Returns:
+            The output of running the shell command
+        """
+        return self.execute(command)
